@@ -9,7 +9,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body
+        className={`${inter.className} bg-slate-900 antialiased dark:text-slate-300`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
