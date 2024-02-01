@@ -1,5 +1,5 @@
 // import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import DashboardSkeleton from '../ui/skeletons';
+import DashboardSkeleton from '../../ui/skeletons';
 
 export default function Loading() {
   return (
