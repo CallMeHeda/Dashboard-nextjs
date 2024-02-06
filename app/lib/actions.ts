@@ -2,12 +2,14 @@
 
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const formSchema = z.object({
   id: z.string(),
   customerId: z.string(),
   amount: z.coerce.number(),
-  data: z.string(),
+  date: z.string(),
   status: z.enum(['pending', 'paid']),
 });
 
@@ -24,7 +26,10 @@ export async function createInvoice(formData: FormData) {
   const date = new Date().toISOString().split('T')[0];
 
   await sql`
-    INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+    INSERT INTO invoices (customer_id, amount, date, status)
+    VALUES (${customerId}, ${amountInCents}, ${date}, ${status})
   `;
+
+  revalidatePath('/dashboard/invoices');
+  redirect('/dashboard/invoices');
 }
